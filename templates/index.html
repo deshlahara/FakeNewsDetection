@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="author" content="TEAM POTTERS" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/bootstrap.min.css') }}" />
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/material-components-web.min.css') }}" />
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/material.css') }}" />
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/bootstrap-reboot.css') }}">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/icon.css') }}" />
+    <script type="text/javascript" src="{{url_for('static', filename='js/main.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/material-components-web.min.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/bootstrap.bundle.min.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/jquery-3.4.0.min.js')}}"></script>
+
+
+    <script>
+        $(document).ready(function(){
+  // Add smooth scrolling to all links
+  $("a").on('click', function(event) {
+
+    // Make sure this.hash has a value before overriding default behavior
+    if (this.hash !== "") {
+      // Prevent default anchor click behavior
+      event.preventDefault();
+
+      // Store hash
+      var hash = this.hash;
+
+      // Using jQuery's animate() method to add smooth page scroll
+      // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+      $('html, body').animate({
+        scrollTop: $(hash).offset().top
+      }, 800, function(){
+
+        // Add hash (#) to URL when done scrolling (default click behavior)
+        window.location.hash = hash;
+      });
+    } // End if
+  });
+});
+    </script>
+
+
+    <title>Fake News Detector</title>
+
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/stylesheet.css') }}" />
+
+    <style>
+
+    html {
+       scroll-behavior: smooth;
+    }
+
+body {
+    font-family: 'Inconsolata', monospace;
+    color: #fff;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Inconsolata');
+/* Blue */
+
+a {
+    color: #333;
+}
+
+/* ---- particles.js container ---- */
+
+#particles-js{
+  z-index: -10;
+  height: 600px;
+  width: 100%;
+  background-color: #333;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+
+nav {
+    font-family: 'Inconsolata', monospace;
+}
+
+.boxy {
+    margin-top: 70px;
+}
+
+input:focus {
+
+}
+
+    </style>
+
+</head>
+
+
+<body>
+
+        <nav class="navbar navbar-light bg-white justify-content-start nav-pills nav-fill">
+            <a class="navbar-brand" href="/" style="padding-left: 10px;">
+            <img src="{{url_for('static', filename='img/logo.png')}}"
+            width="30" height="30" class="d-inline-block align-top" alt="">
+                APP
+            </a>
+
+            <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">THE PROJECT ?</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">HOW IT WORKS ?</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">TECHNOLOGY ?</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">OUR PROJECT GUIDE</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="">THE DOERS</a>
+                    </li>
+            </ul>
+
+
+        </nav>
+
+        <div class="container form-group justify-content-center boxy">
+        <form action="/" method="POST" class="needs-validation" novalidate>
+            <div class="form-group">
+                <label for="headline">NEWS HEADLINE : </label>
+                <input type="text" id="head" class="form-control rounded" name="headline" placeholder="FEED THE HEADLINE..."
+                aria-describedby="title" required>
+                <div class="invalid-feedback alert alert-danger" id="isvalid"
+                >PLEASE PROVIDE THE HEADLINE &#128515;</div>
+                <small id="title" class="form-text badge badge-pill badge-warning text-muted" style="font-size: 1rem;
+                padding: 10px;">
+                    THIS PREDICTS WHETHER NEWS HEADLINE IS REAL OR FAKE
+                </small>
+            </div>
+
+            <div class="form-group">
+                <label for="comment">NEWS CONTENT : </label>
+                <textarea class="form-control" name="comment" rows="3" placeholder="FEED THE CONTENT HERE..."
+                aria-describedby="content" required></textarea>
+                 <div class="invalid-feedback alert alert-danger rounded"
+                 >PLEASE PROVIDE THE CONTENT &#128515;</div>
+                <small id="content" class="form-text badge badge-pill badge-warning text-muted" style="font-size: 1rem;
+                padding: 10px;">
+                    THIS PREDICTS WHETHER NEWS CONTENT IS FAKE/REAL & SARCASTIC/NOT
+                </small>
+            </div>
+
+            <button type="submit" style="background-color: #fff;" class="foo-button mdc-button btn btn-light">
+                PREDICT</button>
+            </form>
+        </div>
+
+
+    {%if prediction[0] == 1 %}
+        <span class="badge badge-pill badge-success" style="padding: 10px; font-size: 1rem; margin-left: 10px;
+        margin-top: 20px;"
+        >HEADLINE : {{prediction[0]}} - REAL</span>
+    {% elif prediction[0] == 0 %}
+        <span class="badge badge-pill badge-danger" style="padding: 10px; font-size: 1rem; margin-left: 10px;
+        margin-top: 20px;"
+        >HEADLINE : {{prediction[0]}} - FAKE</span>
+
+    {% endif %}
+
+    {% if prediction[1] == 1 %}
+        <span class="badge badge-pill badge-success" style="padding: 10px; font-size: 1rem; margin-left: 10px;
+        margin-top: 20px;"
+        >CONTENT : {{prediction[1]}} - REAL</span>
+    {% elif prediction[1] == 0 %}
+        <span class="badge badge-pill badge-danger" style="padding: 10px; font-size: 1rem; margin-left: 10px;
+        margin-top: 20px;"
+        >CONTENT : {{prediction[1]}} - FAKE</span>
+
+    {% endif %}
+
+
+        {% if prediction[2] == 0 %}
+        <span class="badge badge-pill badge-danger" style="padding: 10px; font-size: 1rem; margin-left: 10px;
+        margin-top: 20px;"
+        >CONTENT : {{prediction[2]}} - SARCASTIC</span>
+    {% elif prediction[2] == 1 %}
+        <span class="badge badge-pill badge-success" style="padding: 10px; font-size: 1rem; margin-left: 10px;
+        margin-top: 20px;"
+        >CONTENT : {{prediction[2]}} - NOT SARCASTIC</span>
+    {% endif %}
+
+         {% if prediction[3] == 0 %}
+        <span class="badge badge-pill badge-secondary" style="padding: 10px; font-size: 1rem; margin-left: 10px;
+        margin-top: 20px;">
+        CONTENT : {{prediction[3]}} - NEUTRAL REVIEW</span>
+    {% elif prediction[3] == 1 %}
+        <span class="badge badge-pill badge-danger" style="padding: 10px; font-size: 1rem; margin-left: 10px;
+        margin-top: 20px;"
+        >CONTENT : {{prediction[3]}} - LEFT BIASED</span>
+
+    {% elif prediction[3] == 2 %}
+       <span class="badge badge-pill badge-primary" style="padding: 10px; font-size: 1rem; margin-left: 10px;
+        margin-top: 20px;"
+        >CONTENT : {{prediction[3]}} - RIGHT BIASED</span>
+    {% endif %}
+
+
+
+
+
+    <div id="particles-js"></div>
+
+
+    <script type="text/javascript" src="{{url_for('static', filename='js/particles.min.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/app.js')}}"></script>
+
+</body>
+
+</html>
